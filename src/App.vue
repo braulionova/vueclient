@@ -1,28 +1,61 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">Vue Axios Post</div>
+    
+                    <div class="card-body">
+                        <form @submit="formSubmit">
+                        <strong>Name:</strong>
+                        <input type="text" class="form-control" v-model="name">
+                        <strong>Description:</strong>
+                        <textarea class="form-control" v-model="description"></textarea>
+    
+                        <button class="btn btn-success">Submit</button>
+                        </form>
+                        <strong>Output:</strong>
+                        <pre>
+                        {{output}}
+                        </pre>
+                        <div>{{mensaje}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
-
+     
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
-export default {
-  name: 'app',
-  components: {
-    HelloWorld
-  }
-}
+    export default {
+        mounted() {
+            console.log('Component mounted.')
+        },
+        data() {
+            return {
+              name: '',
+              description: '',
+              output: '',
+              mensaje: ''
+            };
+        },
+        methods: {
+            formSubmit(e) {
+                e.preventDefault();
+                let currentObj = this;
+                this.axios.post('https://jsonplaceholder.typicode.com/users', {
+                    title: this.name,
+                    body: this.description,
+                    userId: 1
+                })
+                .then(function (response) {
+                    currentObj.output = response.data;
+                    currentObj.mensaje = "Cliente guardado correctamente";
+                })
+                .catch(function (error) {
+                    currentObj.output = error;
+                });
+            }
+        }
+    }
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
