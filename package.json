@@ -10,7 +10,7 @@
     "postinstall": "if test \"$NODE_ENV\" = \"production\" ; then npm run build ; fi "
   },
   "dependencies": {
-    "axios": "^0.19.1",
+    "axios": "^0.21.1",
     "core-js": "^3.4.4",
     "express": "^4.17.1",
     "http-server": "^0.12.1",
